@@ -10,6 +10,6 @@ const carSlice = createSlice({
     reducers: {}
 })
 
-export const selectCars = state => state.cars
+export const selectCars = state => state.car.cars
 
 export default carSlice.reducer
