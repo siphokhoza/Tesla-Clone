@@ -1,23 +1,38 @@
 import React from 'react'
 import styled from "styled-components"
+import { motion } from 'framer-motion'
 
 function Section({ title, description, leftBtnText, rightBtnText, backgroundImg }) {
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        duration: 1.2, 
+        ease: [0.6, 0.01, -0.05, 0.95], // Custom ease to mimic bounce effect
+        type: "spring",
+        stiffness: 120
+      } 
+    }
+  }
+
   return (
     <Wrap bgImage={backgroundImg}>
-        <ItemText>
+        <ItemText as={motion.div} variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
             <h1>{title}</h1>
             <p>{description}</p>
         </ItemText>
-        <Buttons>
+        <Buttons as={motion.div} variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
             <ButtonGroup>
                 <LeftButton>
                     {leftBtnText}
                 </LeftButton>
-                { rightBtnText &&
+                {rightBtnText && (
                     <RightButton>
                         {rightBtnText}
                     </RightButton>
-                }
+                )}
             </ButtonGroup>
             <DownArrow src="/images/down-arrow.svg" />
         </Buttons>
@@ -37,22 +52,21 @@ const Wrap = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-image: ${props => `url("/images/${props.bgImage}")` };
+    background-image: ${props => `url("/images/${props.bgImage}")`};
 `
 const ItemText = styled.div`
     padding-top: 15vh;
     text-align: center;
-
 `
 const ButtonGroup = styled.div`
-    display: flex;
+    display: flex; 
     margin-bottom: 30px;
-    @media (max-with: 768px){
-        flex-direction: colomn;
+    @media (max-width: 768px) {
+        flex-direction: column;
     }
 `
 const LeftButton = styled.div`
-    Background-color: rgba(23, 26, 32, 0.8);
+    background-color: rgba(23, 26, 32, 0.8);
     height: 40px;
     width: 256px;
     color: white;
@@ -73,9 +87,7 @@ const RightButton = styled(LeftButton)`
 `
 const DownArrow = styled.img`
     height: 40px;
-    over-x: hidden;
-    animation: animateDown infinite 1.5s 
+    overflow-x: hidden;
+    animation: animateDown infinite 1.5s;
 `
-const Buttons = styled.div`
-
-`
+const Buttons = styled.div``;
